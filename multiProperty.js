@@ -1214,7 +1214,7 @@ console.log(uniqueId)
   handleSubmitForm('[data-form="commercial"]', '[data-elem="name"]', '[data-elem="phone"]')
 
 
-});
+
 
 
 
@@ -1260,3 +1260,5 @@ function formatString(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 }
+
+  });
