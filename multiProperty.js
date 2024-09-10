@@ -652,6 +652,7 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
   map.addControl(draw);
   map.on('load', function () {
     draw.changeMode("lots_of_points");
+    updateArea(searchedArea)
     
 
   });
@@ -659,6 +660,9 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
     updateArea(searchedArea)
     updateAddress()
   })
+  map.on('idle',function(){
+    map.resize()
+    })
   // draw.update(updateArea(searchedArea))
 
   //Method for getting and updating the area on page using Turf.js
@@ -888,105 +892,6 @@ function setupCalculatorAndStorage() {
 setTimeout(setupCalculatorAndStorage, 2000)
 
 
-// // Calculator
-
-// // Constants
-// const SQ_FEET_CONVERSION_FACTOR = 10.763911105;
-// const SLOP_WASTE_FACTOR = 1.10;
-// const FLAT_SLOP_WASTE_FACTOR = 1;
-// const WASTE_MULTIPLIER = 0.10;
-
-// // Helper functions
-// function calculateSquareFeet(area) {
-//   return Math.round(parseInt(area) * SQ_FEET_CONVERSION_FACTOR);
-// }
-
-// function calculateMaterialCalc(sqFoot, factor, multiplier) {
-//   return ((sqFoot * factor) * multiplier) + (sqFoot * factor);
-// }
-
-// function calculatePrice(calc, lowRate, highRate, additionalCost = 0) {
-//   return {
-//     lowPrice: calc * lowRate + additionalCost,
-//     highPrice: calc * highRate + additionalCost
-//   };
-// }
-
-// // Getting area in sq meters from DataStore and converting to sq feets
-// const sqFoot = calculateSquareFeet(DataStore.get('area_cal'));
-// const urlParams = new URLSearchParams(window.location.search);
-// const accuracy = Number(urlParams.get('accuracy'));
-
-
-// // Material Calculations
-// const asphaltCalc = calculateMaterialCalc(sqFoot, SLOP_WASTE_FACTOR, WASTE_MULTIPLIER);
-// const metalCalc = calculateMaterialCalc(sqFoot, SLOP_WASTE_FACTOR, 0.18);
-// const flatCalc = calculateMaterialCalc(sqFoot, FLAT_SLOP_WASTE_FACTOR, WASTE_MULTIPLIER);
-// const standardCalc = asphaltCalc; // Same as asphaltCalc
-
-
-// // // Pricing Factors new
-// // const priceFactors = {
-// //   asphalt: [5.00, 7.50], 
-// //   silicone coating: [10, 17], 
-// //   flat: [12, 19], 
-// //   standard: [5.00, 7.50] },
-
-// // Pricing Factors
-// const priceFactors = {
-//   0: { asphalt: [5.00, 7.50], metal: [18, 27], flat: [12, 19], standard: [5.00, 7.50] },
-//   1: { asphalt: [5.30, 7.20], metal: [20, 27], flat: [13, 19], standard: [5.30, 7.20] },
-//   2: { asphalt: [4.50, 8.50], metal: [17, 27], flat: [10, 19], standard: [4.50, 8.50] },
-// };
-
-// // Ensure rates are set correctly, falling back to default if necessary
-// let rates = priceFactors[accuracy] || priceFactors[0];
-
-// // Verify that rates for each material are defined
-// function calculateMaterialPrice(materialCalc, materialRates) {
-//   if (materialRates && materialRates.length === 2) {
-//     return calculatePrice(materialCalc, ...materialRates);
-//   }
-//   // Handle undefined rates, potentially log error or set defaults
-//   console.error(`Rates for material not defined: accuracy=${accuracy}`);
-//   return { lowPrice: 0, highPrice: 0 };
-// }
-
-// let asphaltPrice = calculateMaterialPrice(asphaltCalc, rates.asphalt);
-// let metalPrice = calculateMaterialPrice(metalCalc, rates.metal);
-// let flatPrice = calculateMaterialPrice(flatCalc, rates.flat);
-// let standardPrice = calculateMaterialPrice(standardCalc, rates.standard);
-
-// // Extra charge for areas less than 1000 sq feet
-// const EXTRA_CHARGE = 1000;
-// if (sqFoot <= 1000) {
-//   asphaltPrice = calculatePrice(asphaltCalc, ...rates.asphalt, EXTRA_CHARGE);
-//   standardPrice = calculatePrice(standardCalc, ...rates.standard, EXTRA_CHARGE);
-// }
-
-// console.log(`${sqFoot} sqft`, `Asphalt Price: ${asphaltPrice.lowPrice} - ${asphaltPrice.highPrice}`);
-
-// // Storing all calculation data in this object
-// const allCalculations = {
-//   'AsphaltCalculations': asphaltCalc,
-//   'AsphaltLowPrice': asphaltPrice.lowPrice,
-//   'AsphaltHighPrice': asphaltPrice.highPrice,
-//   'MetalCalculations': metalCalc,
-//   'MetalLowPrice': metalPrice.lowPrice,
-//   'MetaltHighPrice': metalPrice.highPrice,
-//   'FlatCalculations': flatCalc,
-//   'FlatLowPrice': flatPrice.lowPrice,
-//   'FlatHighPrice': flatPrice.highPrice,
-//   'StandardCalculations': standardCalc,
-//   'StandardLowPrice': standardPrice.lowPrice,
-//   'StandardHighPrice': standardPrice.highPrice,
-// };
-
-// // Sending allCalc data to DataStore
-// DataStore.set('AllCalculations', allCalculations);
-
-
-
 // Constants
 const SQ_FEET_CONVERSION_FACTOR = 10.763911105;
 const SLOP_WASTE_FACTOR = 1.10;
@@ -1008,10 +913,12 @@ function calculateSquareFeet(area) {
 }
 
 function calculateMaterialCalc(sqFoot, factor, multiplier) {
+  console.log(sqFoot, factor, multiplier, 'sqFoot, factor, multiplier')
   return ((sqFoot * factor) * multiplier) + (sqFoot * factor);
 }
 
 function calculatePrice(calc, lowRate, highRate, additionalCost = 0) {
+  console.log(calc, lowRate, highRate, 'calc lowrate, highrate')
   return {
     lowPrice: calc * lowRate + additionalCost,
     highPrice: calc * highRate + additionalCost
@@ -1030,7 +937,7 @@ function calculateMaterialPrice(materialCalc, materialRates) {
 function updateSearchedAddressesWithPricing() {
   Object.keys(addressSearched).forEach(key => {
     const addressData = addressSearched[key];
-    const sqFoot = addressData.areaInFeet;
+    const sqFoot = Number(addressData.areaInFeet);
 
     let materialCalc;
     switch (materialSelected) {
@@ -1145,13 +1052,21 @@ console.log(uniqueId)
 
 
 
-  function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute) {
-    var formWrapper = document.querySelector(formAttribute);
-    var form = formWrapper.querySelector('form')
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault(); // Prevent default form submission
-      var maskedPhone = document.querySelector(phoneFieldAttribute).value;
-      var extractedPhone = maskedPhone.replace(/\D/g, '');
+  
+function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute) {
+  var formWrapper = document.querySelectorAll(formAttribute);
+  // var submitBtn = formWrapper.querySelector('[data-elem="submit"]')
+ formWrapper.forEach(formDiv => {
+  var form = formDiv.querySelector('form')
+  
+  form.addEventListener("submit", submitMethod)
+ })
+    
+    async  function submitMethod(e) {
+    console.log(e)
+    e.preventDefault(); // Prevent default form submission
+    var maskedPhone = document.querySelector(phoneFieldAttribute).value;
+    var extractedPhone = maskedPhone.replace(/\D/g, '');
 
       const isValidPhoneNumber = await validatePhoneNumber(extractedPhone);
       if (isValidPhoneNumber) {
@@ -1214,8 +1129,8 @@ console.log(uniqueId)
 
 
 
-    });
-  };
+    }
+  }
   // Attaching event listeners to forms
   handleSubmitForm('[data-form="commercial"]', '[data-elem="name"]', '[data-elem="phone"]')
 
