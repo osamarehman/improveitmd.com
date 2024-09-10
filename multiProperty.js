@@ -651,7 +651,7 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
   });
   map.addControl(draw);
   map.on('load', function () {
-    //draw.changeMode("direct_select");
+    draw.changeMode("lots_of_points");
     
 
   });
