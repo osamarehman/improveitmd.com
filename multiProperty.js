@@ -1,6 +1,5 @@
 //Credentials 
 
-window.addEventListener('DOMContentLoaded', function () {
 mapboxgl.accessToken = 'pk.eyJ1IjoiaW1wcm92ZWl0bWQiLCJhIjoiY2w1OXlhZ3BnMDAyMDNrcG9pdmU3OXNvcyJ9.8IKtnRJwbi7ss5MjeHGAkQ';
 
 
@@ -480,67 +479,74 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
     return polygon;
   }
 
-  // Function to handle map load event
-  function onMapLoad() {
-    // Setting a 50x50 pixels bounding box to detect the polygon at the searched address
+  map.on('load', () => {
+    //Setting a 50x50 pixels bounding box to detect the polygon on the address searched
     const point = map.project(coordinate);
+    //You can change the value for width and height for more sensitivity
     const width = 50;
     const height = 50;
 
-    // Defining the bounding box
-    const bbox = [
-      [point.x - width / 2, point.y - height / 2],
-      [point.x + width / 2, point.y + height / 2]
-    ];
+    let point1 = point.x - width / 2
+    let point2 = point.y - height / 2
+    let point3 = point.x + width / 2
+    let point4 = point.y + height / 2
+    let bbox = [[point1, point2], [point3, point4]]
 
-    // ## TODO 
-    //If the building is larger than the map window than simply drop a polygon at the center
-
-
-
-    // Checking if there are any polygons in the bounding box
+    //Checking if we have any polygon in the bounding box
     const features = map.queryRenderedFeatures(bbox);
-    const displayProperties = ['geometry', 'type', 'properties', 'id'];
+    //Getting polygon properties
+    const displayProperties = { 'features': ['geometry', 'type', 'properties', 'id'], 'layer': '', 'sourceLayer': '' }
+    //Mapping properties and checking if the feature is actually a building
+    let newFeatures = [];
+    for (let i = 0; i < features.length; i++) {
+      if (features[i].layer.id === 'building') {
+        newFeatures.splice(0, 0, features[i])
 
-    // Filtering features to ensure the layer is 'building'
-    const buildingFeatures = features.filter(feature => feature.layer.id === 'building');
+        i = features.length;
 
-    if (buildingFeatures.length > 0) {
-      handleExistingPolygon(buildingFeatures, displayProperties);
-    } else {
-      createNewPolygon(coordinate);
+      }
     }
-  }
+    //If we got any polygon then if block will execute which will create a polygon and disallowing additional clicks
+    if (newFeatures.length !== 0) {
+      const displayFeatures = newFeatures.map((feat) => {
+        displayFeat = {};
+        displayProperties.features.forEach((prop) => {
+          displayFeat[prop] = feat[prop];
 
-  // Function to handle the existing polygon
-  function handleExistingPolygon(features, displayProperties) {
-    const displayFeatures = features.map(feat => {
-      let displayFeat = {};
-      displayProperties.forEach(prop => {
-        displayFeat[prop] = feat[prop];
-      });
+        }
+        );
 
-      draw.add(displayFeat);
-      const data = draw.getAll();
+        draw.add(displayFeat);
+        const data = draw.getAll();
 
-      const modeOptions = { featureId: data.features[0].id };
-      setTimeout(() => draw.changeMode('direct_select', modeOptions), 1000);
+        var modeOptions = {
+          featureId: data.features[0].id
+        }
+        setTimeout(function () {
+          draw.changeMode('static_mode', modeOptions)
+        }, 1000)
 
-      return displayFeat;
-    });
-  }
+        return displayFeat;
 
-  // Function to create a new polygon at the specified coordinate
-  function createNewPolygon(coordinate) {
-    draw.add(bBox(coordinate));
-    const data = draw.getAll();
+      }
+      )
+    }
+    // Otherwise we will drop a polygon on the center and change the mode to edit it
+    else {
 
-    const modeOptions = { featureId: data.features[0].id };
-    setTimeout(() => draw.changeMode('direct_select', modeOptions), 1000);
-  }
+      draw.add(bBox(coordinate))
+      const data1 = draw.getAll();
+      var modeOptions1 = {
+        featureId: data1.features[0].id
+      }
 
-  // Register the 'load' event handler for the map
-  map.on('load', onMapLoad);
+      setTimeout(function () {
+        draw.changeMode('direct_select', modeOptions1)
+      }, 1000)
+
+    }
+
+  });
 
   //Custom Blank Mode - For disallowing clicking on the polygons
 
@@ -1218,7 +1224,6 @@ console.log(uniqueId)
 
 
 
-
 // Function to initialize and populate results
 function initResults() {
   document.querySelector('[data-elem="material-selected"]').textContent = materialSelected;
@@ -1260,5 +1265,3 @@ function formatString(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 }
-
-  });
