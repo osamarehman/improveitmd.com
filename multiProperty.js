@@ -243,7 +243,8 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
       
       const inputField = document.querySelector('.mapboxgl-ctrl-geocoder--input'); 
       inputField.addEventListener('input', () => {
-        geocodeWrapper.style.marginBottom = '50vh';
+        //geocodeWrapper.style.marginBottom = '50vh';
+        $('[data-elem="geocoder"]').css('margin-bottom', '50vh')
       });
     }
 
@@ -264,7 +265,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
 
         }
       });
-      console.log(e.result, addressComponents, "components 2nd")
+      //console.log(e.result, addressComponents, "components 2nd")
       if (flowType === "single") {
         addressSearched[1] = {
           address: fullAddress,
@@ -272,8 +273,9 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
           short_address: addressComponents
         }
       } else {
+        $('[data-elem="geocoder"]').css('margin-bottom', '0')
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
-        geocodeWrapper.style.marginBottom = '0px'
+        //geocodeWrapper.style.marginBottom = '0px'
 
         addressSearched[addressNumber] = {
           address: fullAddress,
