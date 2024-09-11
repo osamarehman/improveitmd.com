@@ -1063,8 +1063,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
  })
     
     async  function submitMethod(e) {
-    console.log(e)
-    const damageStatus = e.target.querySelector('[data-elem="storm-damage"]').value
+    const damageStatus = document.querySelector('input[type=hidden]').value
     e.preventDefault(); // Prevent default form submission
     var maskedPhone = document.querySelector(phoneFieldAttribute).value;
     var extractedPhone = maskedPhone.replace(/\D/g, '');
