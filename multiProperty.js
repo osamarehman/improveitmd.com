@@ -237,7 +237,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     });
     geocoder.addTo(geocoderElem);
     geocodeLoader.style.display = 'none';
-    geocodeWrapper.style.display = 'block';
+    geocoderElem.style.display = 'block';
 
     if (flowType === "multi"){
       
