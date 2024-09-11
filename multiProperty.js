@@ -240,11 +240,15 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     geocoderElem.style.display = 'block';
 
     if (flowType === "multi"){
+
+      console.log('flow type', flowType
+      )
       
       const inputField = $(geocodeWrapper).find('.mapboxgl-ctrl-geocoder--input'); 
       $(geocoderElem).css('transition', 'margin-bottom 0.5s ease');
       $(inputField).on('input', () => {
         //geocodeWrapper.style.marginBottom = '50vh';
+        console.log('input on geocoder')
         $(geocoderElem).css('margin-bottom', '40vh');
             });
     }
@@ -274,6 +278,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
           short_address: addressComponents
         }
       } else {
+        console.log('geocoder on results')
         $(geocoderElem).css('margin-bottom', '0');
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
         //geocodeWrapper.style.marginBottom = '0px'
