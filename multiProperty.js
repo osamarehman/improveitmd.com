@@ -241,11 +241,11 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
 
     if (flowType === "multi"){
       
-      const inputField = document.querySelector('.mapboxgl-ctrl-geocoder--input'); 
-      $('[data-elem="geocoder"]').css('transition', 'margin-bottom 0.5s ease');
-      inputField.addEventListener('input', () => {
+      const inputField = $(geocodeWrapper).find('.mapboxgl-ctrl-geocoder--input'); 
+      $(geocoderElem).css('transition', 'margin-bottom 0.5s ease');
+      $(inputField).on('input', () => {
         //geocodeWrapper.style.marginBottom = '50vh';
-        $('[data-elem="geocoder"]').css('margin-bottom', '40vh');
+        $(geocoderElem).css('margin-bottom', '40vh');
             });
     }
 
@@ -274,7 +274,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
           short_address: addressComponents
         }
       } else {
-        $('[data-elem="geocoder"]').css('margin-bottom', '0');
+        $(geocoderElem).css('margin-bottom', '0');
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
         //geocodeWrapper.style.marginBottom = '0px'
 
