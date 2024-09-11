@@ -254,10 +254,11 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
       //       });
     
 
-    geocoder.on('loading ', (e)=> {
+    geocoder.on('loading ', (query)=> {
+      console.log(query, 'query')
       console.log('geocode loading', flowType, 'flowType', geocoderElem, 'geocoder elem')
-      if (flowType === "multiple"){
       $(geocoderElem).css('margin-bottom', '40vh');
+      if (flowType === "multiple"){
   }
 })
 
