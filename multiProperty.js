@@ -239,21 +239,26 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     geocodeLoader.style.display = 'none';
     geocoderElem.style.display = 'block';
 
-    if (flowType === "multi"){
+   
 
       console.log('flow type', flowType
       )
       
-      const inputField = $(geocodeWrapper).find('.mapboxgl-ctrl-geocoder--input'); 
-      console.log(inputField, 'input field geocoder')
+      // const inputField = $(geocodeWrapper).find('.mapboxgl-ctrl-geocoder--input'); 
+      //console.log(inputField, 'input field geocoder')
       $(geocoderElem).css('transition', 'margin-bottom 0.5s ease');
-      $(inputField).on('input', () => {
-        //geocodeWrapper.style.marginBottom = '50vh';
-        console.log('input on geocoder')
-        $(geocoderElem).css('margin-bottom', '40vh');
-            });
-    }
+      // $(inputField).on('input', () => {
+      //   //geocodeWrapper.style.marginBottom = '50vh';
+      //   console.log('input on geocoder')
+       
+      //       });
+    
 
+    geocoder.on('loading ', (e)=> {
+      if (flowType === "multi"){
+      $(geocoderElem).css('margin-bottom', '40vh');
+  }
+})
 
     geocoder.on('result', (e) => {
 
