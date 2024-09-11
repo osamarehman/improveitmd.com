@@ -242,6 +242,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     if (flowType === "multi"){
       
       const inputField = document.querySelector('.mapboxgl-ctrl-geocoder--input'); 
+      $('[data-elem="geocoder"]').css('transition', 'margin-bottom 0.5s ease');
       inputField.addEventListener('input', () => {
         //geocodeWrapper.style.marginBottom = '50vh';
         $('[data-elem="geocoder"]').css('margin-bottom', '40vh');
