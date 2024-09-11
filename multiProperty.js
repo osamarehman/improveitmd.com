@@ -273,7 +273,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
         }
       } else {
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
-        geocoderElem.style.marginBottom = '0px' : null
+        geocoderElem.style.marginBottom = '0px'
 
         addressSearched[addressNumber] = {
           address: fullAddress,
