@@ -273,7 +273,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
           short_address: addressComponents
         }
       } else {
-        $('[data-elem="geocoder"]').css('margin-bottom', '0!important')
+        $('[data-elem="geocoder"]').css('margin-bottom', '0');
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
         //geocodeWrapper.style.marginBottom = '0px'
 
