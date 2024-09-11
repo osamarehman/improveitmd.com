@@ -255,6 +255,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     
 
     geocoder.on('loading ', (e)=> {
+      console.log('geocode loading', flowType, 'flowType', geocoderElem, 'geocoder elem')
       if (flowType === "multi"){
       $(geocoderElem).css('margin-bottom', '40vh');
   }
