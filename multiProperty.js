@@ -239,7 +239,17 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
     geocodeLoader.style.display = 'none';
     geocoderElem.style.display = 'block';
 
+    if (flowType === "multi"){
+      
+      const inputField = document.querySelector('.mapboxgl-ctrl-geocoder--input'); 
+      inputField.addEventListener('input', () => {
+        geocoderElem.style.marginBottom = '50vh';
+      });
+    }
+
+
     geocoder.on('result', (e) => {
+
       const fullAddress = e.result.place_name;
       const coordinates = e.result.geometry.coordinates;
       const addressComponents = {}
@@ -263,6 +273,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
         }
       } else {
         let addressNumber = geocodeWrapper?.querySelector('[data-elem="add-sus"]')?.textContent.trim()
+        geocoderElem.style.marginBottom = '0px' : null
 
         addressSearched[addressNumber] = {
           address: fullAddress,
@@ -1055,7 +1066,6 @@ console.log(uniqueId)
   
 function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute) {
   var formWrapper = document.querySelectorAll(formAttribute);
-  // var submitBtn = formWrapper.querySelector('[data-elem="submit"]')
  formWrapper.forEach(formDiv => {
   var form = formDiv.querySelector('form')
   
