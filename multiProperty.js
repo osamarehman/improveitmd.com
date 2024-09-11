@@ -61,8 +61,8 @@ let flowType = null;
       firstScreen.classList.add('is--hidden')
       singleScreen.classList.remove('is--hidden')
       multiScreen.remove()
-      initializeSingleGeocoder(singleScreen)
       flowType = "single";
+      initializeSingleGeocoder(singleScreen)
 
 
     }
@@ -70,8 +70,8 @@ let flowType = null;
       firstScreen.classList.add('is--hidden')
       multiScreen.classList.remove('is--hidden')
       singleScreen.remove()
-      initializeGeocoder(multiScreen)
       flowType = "multiple";
+      initializeGeocoder(multiScreen)
 
 
     }
