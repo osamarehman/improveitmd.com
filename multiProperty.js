@@ -244,8 +244,8 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
       const inputField = document.querySelector('.mapboxgl-ctrl-geocoder--input'); 
       inputField.addEventListener('input', () => {
         //geocodeWrapper.style.marginBottom = '50vh';
-        $('[data-elem="geocoder"]').css('margin-bottom', '50vh!important')
-      });
+        $('[data-elem="geocoder"]').css('margin-bottom', '40vh');
+            });
     }
 
 
