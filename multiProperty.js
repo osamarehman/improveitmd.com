@@ -71,7 +71,7 @@ let flowType = null;
       multiScreen.classList.remove('is--hidden')
       singleScreen.remove()
       initializeGeocoder(multiScreen)
-      flowType = "multi";
+      flowType = "multiple";
 
 
     }
@@ -179,7 +179,7 @@ let flowType = null;
 
 
 function thirdScreen(flowtype) {
-  if (flowtype === "multi") {
+  if (flowtype === "multiple") {
 
     document.querySelector('[data-elem="multi-next-button-1"]').addEventListener('click', function () {
       console.log('next button clicked')
@@ -256,7 +256,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
 
     geocoder.on('loading ', (e)=> {
       console.log('geocode loading', flowType, 'flowType', geocoderElem, 'geocoder elem')
-      if (flowType === "multi"){
+      if (flowType === "multiple"){
       $(geocoderElem).css('margin-bottom', '40vh');
   }
 })
@@ -816,7 +816,7 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
   }
 
 
-  if (flowType === "multi") {
+  if (flowType === "multiple") {
     mapControlEdit?.addEventListener('click', mapEditMethod)
     mapControlReset?.addEventListener('click', mapResetMethod)
   } else {
