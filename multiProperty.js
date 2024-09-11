@@ -245,6 +245,7 @@ function initializeMapbox(geocoderElem, geocodeWrapper, geocodeLoader) {
       )
       
       const inputField = $(geocodeWrapper).find('.mapboxgl-ctrl-geocoder--input'); 
+      console.log(inputField, 'input field geocoder')
       $(geocoderElem).css('transition', 'margin-bottom 0.5s ease');
       $(inputField).on('input', () => {
         //geocodeWrapper.style.marginBottom = '50vh';
