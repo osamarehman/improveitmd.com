@@ -679,7 +679,7 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
     searchedAreaElem.textContent = `${rounded_area.toLocaleString()} ft2`
     console.log(addressSearched, mapKey)
     addressSearched[mapKey].areaInFeet = rounded_area
-    addressSearched[mapKey].areaInMeter = area
+    addressSearched[mapKey].areaInMeter = Math.trunc(Math.round(area * 100) / 100)
 
   }
 
@@ -1064,6 +1064,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
     
     async  function submitMethod(e) {
     console.log(e)
+    const damageStatus = e.target.querySelector('[data-elem="storm-damage"]').value
     e.preventDefault(); // Prevent default form submission
     var maskedPhone = document.querySelector(phoneFieldAttribute).value;
     var extractedPhone = maskedPhone.replace(/\D/g, '');
@@ -1089,17 +1090,19 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
         Object.keys(addressSearched).forEach(key => {
           const addressData = addressSearched[key]
           formdata.append(`address_${key}`, addressData.address);
-
-          area_ft += Number(addressData.areaInFeet)
-          area_mt += Number(addressData.areaInMeter).toFixed(0)
+          console.log(`Area in Feet: ${addressData.areaInFeet}, Area in Meters: ${addressData.areaInMeter}`);
+          area_ft += Number(addressData.areaInFeet);
+          //area_mt += Number(addressData.areaInMeter);
 
 
 
         })
+        console.log(`Total Area in Feet: ${area_ft}, Total Area in Meters: ${area_mt}`);
 
         formdata.append(`total_area_ft`, area_ft);
-        formdata.append(`total_area_mt`, area_mt);
+        formdata.append(`total_area_mt`, (area_ft * 0.3048));
         formdata.append("phone", phone);
+        formdata.append("storm_damage", damageStatus);
         formdata.append("selected_material", materialSelected);
         formdata.append("id", uniqueId)
 
