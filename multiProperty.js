@@ -1117,7 +1117,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
           formdata.append(`address_${key}`, addressData.address);
           console.log(`Area in Feet: ${addressData.areaInFeet}, Area in Meters: ${addressData.areaInMeter}`);
           area_ft += Number(addressData.areaInFeet);
-          //area_mt += Number(addressData.areaInMeter);
+          area_mt += Number(addressData.areaInMeter);
 
 
 
@@ -1125,7 +1125,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
         console.log(`Total Area in Feet: ${area_ft}, Total Area in Meters: ${area_mt}`);
 
         formdata.append(`total_area_ft`, formatString(area_ft));
-        formdata.append(`total_area_mt`, formatString(area_ft * 0.3048));
+        formdata.append(`total_area_mt`, formatString(area_mt));
         formdata.append("phone", phone);
         formdata.append("storm_damage", damageStatus);
         formdata.append("selected_material", materialSelected);
