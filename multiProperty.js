@@ -1169,7 +1169,22 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
 
 // Function to initialize and populate results
 function initResults() {
-  document.querySelector('[data-elem="material-selected"]').textContent = materialSelected;
+
+  const price_tag = document.querySelector('[data-elem="material-selected"]')
+
+  if (materialSelected === "Silicone") {
+    
+    price_tag.textContent = "Silicone Roof Coating";
+  } else if (materialSelected === "TPO") {
+    price_tag.textContent = "TPO Flat Roofing";
+
+  } else if (materialSelected === "Standard") {
+    price_tag.textContent = "Standard Roofing";
+
+  }  else if (materialSelected === "Asphalt") {
+    price_tag.textContent = "Asphalt Roofing";
+
+  }
 
   const addressWrapTemplate = document.querySelector('[data-elem="address-pricing-wrap"]');
   const addressWrapParent = addressWrapTemplate.parentNode;
