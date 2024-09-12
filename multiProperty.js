@@ -1213,6 +1213,9 @@ function initResults() {
     // Append the populated clone to the parent node
     addressWrapParent.appendChild(addressWrapClone);
   });
+
+  setupFormSubmission();
+
 }
 
 //Method to display prices with a comma after thousands
@@ -1223,3 +1226,94 @@ function formatString(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 }
+
+
+
+  // Function to show success message
+  function showSuccessMessage(form) {
+    document.querySelector('[data-block="2nd-form-success"]').classList.remove('is--hidden');
+    document.querySelector('[data-field="second-form-block"]').style.display = 'none'; // Hide the form
+  }
+  
+  // Function to send data to your server
+  function sendDataToGoogleSheets(data, form) {
+  
+    var formData = new FormData();
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+  
+    var requestOptions = {
+      method: "POST",
+      body: formData,
+      redirect: "follow",
+    };
+  
+    fetch("https://script.google.com/macros/s/AKfycbzyfGncBzCinWRlAM6ji5otrANDvW5DuuZ0bGuHCaVmn4Nl45VMh0I1yF8z3DtAbx7nsw/exec", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          
+        } else {
+          throw new Error("Server response wasn't OK");
+        }
+        return response.text();
+      })
+      .then((result) => console.log(result))
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+  
+  // Function to map form data to your row headers
+  function mapFormDataToRowHeaders(formData) {
+    console.log(formData);
+    let mappedData = {
+      name: formData["name"],
+      phone: formData["phone"],
+      id: formData["id"]
+    };
+    return mappedData;
+  }
+  
+  // Function to collect data from a form
+  function collectFormData(form) {
+    let formData = {};
+    // Capture the form's data-name attribute
+    let formName = form.getAttribute("data-name");
+    formData["form_name"] = formName;
+    form.querySelectorAll("[data-field]").forEach(function (element) {
+      let name = element.getAttribute("data-field");
+      let value = element.value;
+      formData[name] = value;
+    });
+  
+    return formData;
+  }
+  
+  function setupFormSubmission() {
+    // Attach event listener to the specific form for submit events
+    var form = document.querySelector("[data-field='second-form']");
+    if (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formName = form.getAttribute("data-name");
+        const formElement = form;
+        // setting up tracking here
+  
+        let formData = collectFormData(this);
+        let dataToSend = mapFormDataToRowHeaders(formData);
+        // Verify email before proceeding
+        if (formData && dataToSend){
+          showSuccessMessage(form);
+        } 
+  
+        // Email is valid, proceed with form submission
+        
+        dataToSend["id"] = uniqueId;
+        sendDataToGoogleSheets(dataToSend, formElement);
+      });
+    }
+  }
+  
