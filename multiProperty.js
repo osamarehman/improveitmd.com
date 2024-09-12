@@ -1125,7 +1125,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
         console.log(`Total Area in Feet: ${area_ft}, Total Area in Meters: ${area_mt}`);
 
         formdata.append(`total_area_ft`, formatString(area_ft));
-        formdata.append(`total_area_mt`, area_mt);
+        formdata.append(`total_area_mt`, area_mt.toFixed(1));
         formdata.append("phone", phone);
         formdata.append("storm_damage", damageStatus);
         formdata.append("selected_material", materialSelected);
