@@ -837,11 +837,17 @@ function initMap(lng, lat, mapContainer, coordinate, addressInfo, mapKey) {
 
 
 
-
+  function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
 
 
 
   function fourthScreen() {
+    scrollToTop()
     //updateAddress()
     if (flowType === "single") {
       document.querySelector('[data-elem="size-wrap"]').classList.add('is--hidden')
