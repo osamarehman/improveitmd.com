@@ -1,6 +1,9 @@
 //Credentials 
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiaW1wcm92ZWl0bWQiLCJhIjoiY2w1OXlhZ3BnMDAyMDNrcG9pdmU3OXNvcyJ9.8IKtnRJwbi7ss5MjeHGAkQ';
+  // Check if mapboxgl.accessToken is already set, if not, set it
+  if (!mapboxgl.accessToken) {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaW1wcm92ZWl0bWQiLCJhIjoiY2w1OXlhZ3BnMDAyMDNrcG9pdmU3OXNvcyJ9.8IKtnRJwbi7ss5MjeHGAkQ';
+  }
 
 
 
@@ -1045,8 +1048,9 @@ function setupCalculatorAndStorage() {
 
 
 
-const apiKey = 'bdc_7a3c280817af44a2952336e349e70525';
-
+if (typeof apiKey === 'undefined') {
+  window.apiKey = 'bdc_7a3c280817af44a2952336e349e70525';
+}
 // Asynchronous function to validate phone number
 async function validatePhoneNumber(phone) {
   // var phone = document.getElementById(phoneFieldId).value;
