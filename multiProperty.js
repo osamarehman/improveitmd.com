@@ -1119,8 +1119,8 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
 
 
         document.querySelector(formAttribute).value = uniqueId
-        // let area_ft = 0;
-        // let area_mt = 0;
+        let area_ft = 0;
+        let area_mt = 0;
 
         // ToDo change this accordingly
         var formdata = new FormData();
@@ -1129,8 +1129,8 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
           const addressData = addressSearched[key]
           formdata.append(`address_${key}`, addressData.address);
           //console.log(`Area in Feet: ${addressData.areaInFeet}, Area in Meters: ${addressData.areaInMeter}`);
-          // area_ft_1 = Number(addressData.areaInFeet);
-          // area_mt_ = Number(addressData.areaInMeter);
+          area_ft = Number(addressData.areaInFeet);
+          area_mt = Number(addressData.areaInMeter);
           formdata.append(`area_ft_${key}`, addressData.areaInFeet);
           formdata.append(`area_mt_${key}`, addressData.areaInMeter);
 
