@@ -1148,7 +1148,7 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
         };
 
         fetch(
-          "https://script.google.com/macros/s/AKfycbx0a9OwBd6vSqZ7VHvuXTalPp-COSHMPmjfkh4E2toPLvXBf8fi-UUlrOTHSTi6aoht/exec",
+          "https://script.google.com/macros/s/AKfycby3YvDh1tRdvVCCD8LifQ_sOQd65LdvDPMAi75nJUWs_kYXPVJ3gGXjWjclgvGsd3yt/exec",
           requestOptions
         )
           .then((response) => response.text())
@@ -1261,7 +1261,7 @@ function formatString(x) {
       redirect: "follow",
     };
   
-    fetch("https://script.google.com/macros/s/AKfycbzyfGncBzCinWRlAM6ji5otrANDvW5DuuZ0bGuHCaVmn4Nl45VMh0I1yF8z3DtAbx7nsw/exec", requestOptions)
+    fetch("https://script.google.com/macros/s/AKfycbzwMjiv_CNpqN5niRq_0DjmcmH6cJwuUfJEvNGu2S6mHMNot42VKETj4WY4M3odIdU6/exec", requestOptions)
       .then((response) => {
         if (response.ok) {
           
