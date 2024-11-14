@@ -185,6 +185,11 @@ let flowType = null;
 
 
 function thirdScreen(flowtype) {
+  // Smooth scroll
+window.scrollTo({
+  top: 0,
+  behavior: 'smooth'
+});
   if (flowtype === "multiple") {
 
     document.querySelector('[data-elem="multi-next-button-1"]').addEventListener('click', function () {
@@ -1185,6 +1190,8 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
 
 // Function to initialize and populate results
 function initResults() {
+
+  scrollToTop()
 
   const price_tag = document.querySelector('[data-elem="material-selected"]')
 
