@@ -1191,8 +1191,10 @@ function handleSubmitForm(formAttribute, nameFieldAttribute, phoneFieldAttribute
 // Function to initialize and populate results
 function initResults() {
 
-  scrollToTop()
-
+window.scrollTo({
+  top: 0,
+  behavior: 'smooth'
+});
   const price_tag = document.querySelector('[data-elem="material-selected"]')
 
   if (materialSelected === "Silicone") {
